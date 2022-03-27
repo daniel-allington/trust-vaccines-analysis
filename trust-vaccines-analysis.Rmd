@@ -55,6 +55,7 @@ d_trustvac %>%
   summarise(
     n = n(),
     M = mean(age) %>% round(digits = 2), 
+    Mdn = median(age),
     SD = sd(age) %>% round(digits = 2))
 
 d_trustvac %>%
