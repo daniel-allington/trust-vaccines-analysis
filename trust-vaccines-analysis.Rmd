@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(dplyr)
 library(readr)
+library(ggplot2)
 
 ed_levels <- c(
   "Primary school",
@@ -45,4 +46,32 @@ d_trustvac <- read_csv(
     col_factor(ordered = TRUE, levels = likert_levels)
   ))
 ```
+
+# Demographic characteristics of the sample
+
+## Age
+```{r}
+d_trustvac %>%
+  summarise(
+    n = n(),
+    M = mean(age) %>% round(digits = 2), 
+    SD = sd(age) %>% round(digits = 2))
+
+d_trustvac %>%
+  ggplot(aes(x = age)) +
+  geom_histogram(binwidth = 5)
+```
+
+## Gender
+```{r}
+d_trustvac %>%
+  count(gender_nb)
+
+d_trustvac %>%
+  ggplot(aes(x = gender_nb)) +
+  geom_bar()
+```
+
+
+
 
