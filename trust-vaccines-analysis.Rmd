@@ -1,7 +1,7 @@
 ---
 title: "Analysis of government trust and attitudes to vaccines"
 author: "Daniel Allington"
-date: "3/27/2022"
+date: "3/31/2022"
 output: html_document
 ---
 
@@ -12,6 +12,8 @@ library(dplyr)
 library(readr)
 library(ggplot2)
 library(knitr)
+
+options(scipen = 999)
 
 ed_levels <- c(
   "Primary school",
@@ -115,6 +117,62 @@ d_trustvac_likert_summary %>%
   ) +
   geom_point() +
   coord_flip()
+```
+
+```{r}
+
+d_trustvac <- d_trustvac %>%
+  mutate(
+    Female = gender_nb == 'Female',
+    Vaccines_safe = vacsafe %>%
+      recode(
+        'Strongly agree' = TRUE,
+        'Tend to agree' = TRUE,
+        'Neither agree nor disagree' = FALSE,
+        'Tend to disagree' = FALSE,
+        'Strongly disagree' = FALSE
+      )
+  )
+
+d_trustvac %>%
+  xtabs(~ Female + Vaccines_safe, .)
+
+d_trustvac %>%
+  group_by(Female) %>%
+  summarise(
+    n = n(),
+    Agree = sum(Vaccines_safe, na.rm = TRUE)
+  ) %>%
+  mutate(
+    Percentage = round(Agree / n * 100)
+  )
+
+chisq.test(
+  d_trustvac$Female,
+  d_trustvac$Vaccines_safe
+)
+
+fisher.test(
+  d_trustvac$Female,
+  d_trustvac$Vaccines_safe
+)
+```
+
+```{r}
+d_trustvac %>%
+  wilcox.test(
+    vacsafe_coded ~ Female,
+    data = .
+  )
+```
+
+```{r}
+d_trustvac %>%
+  t.test(
+    age ~ Vaccines_safe,
+    var.equal = FALSE,
+    data = .
+  )
 ```
 
 
