@@ -245,7 +245,7 @@ d_trustvac %>%
 
 ```{r}
 d_trustvac %>%
-  mutate(Female = Females %>% as.numeric) %>%
+  mutate(Female = Female %>% as.numeric) %>%
   lm(vac_attitude ~ age + gov_trust + Female, data = .) %>%
   summary
 ```
