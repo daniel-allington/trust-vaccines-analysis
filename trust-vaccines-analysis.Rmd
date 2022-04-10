@@ -242,3 +242,11 @@ d_trustvac %>%
 d_trustvac %>%
   cor.test(~ vac_attitude + age, data = .)
 ```
+
+```{r}
+d_trustvac %>%
+  mutate(Female = Females %>% as.numeric) %>%
+  lm(vac_attitude ~ age + gov_trust + Female, data = .) %>%
+  summary
+```
+
