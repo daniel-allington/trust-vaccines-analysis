@@ -203,6 +203,22 @@ d_trustvac %>%
   )
 ```
 
+```{r}
+d_trustvac %>%
+  ggplot(aes(x = vac_attitude, fill = Female)) +
+  geom_histogram(
+    binwidth = 0.5)
+```
 
+```{r}
+d_trustvac %>%
+  ggplot(aes(x = gov_trust, y = vac_attitude)) +
+  geom_jitter(size = 0.5)
+```
 
+```{r}
+d_trustvac %>%
+  ggplot(aes(x = age, y = vac_attitude)) +
+  geom_jitter(size = 0.5)
+```
 
