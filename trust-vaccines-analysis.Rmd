@@ -222,3 +222,23 @@ d_trustvac %>%
   geom_jitter(size = 0.5)
 ```
 
+```{r}
+d_trustvac %>%
+  t.test(
+    vac_attitude ~ Female,
+    var.equal = FALSE,
+    data = .
+  )
+```
+
+```{r}
+d_trustvac %>%
+  mutate(Female = Female %>% as.numeric) %>%
+  cor.test(~ vac_attitude + Female, data = .)
+
+d_trustvac %>%
+  cor.test(~ vac_attitude + gov_trust, data = .)
+
+d_trustvac %>%
+  cor.test(~ vac_attitude + age, data = .)
+```
